@@ -11,5 +11,9 @@ jobs:
     runs-on: ubuntu-latest
     steps:
     - uses: actions/checkout@v3
+
+    - name: Install libsodium
+      run: sudo apt install -y libsodium-dev
+
     - name: Tests
       run: python run.py
