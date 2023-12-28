@@ -92,6 +92,7 @@ typedef struct RemotePeer {
     pthread_mutex_t reply_listeners_mutex;
     pthread_mutex_t encryption_mutex;
     char free_on_disconnect;
+    void *attribute;
 } RemotePeer;
 
 

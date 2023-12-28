@@ -202,6 +202,7 @@ void z_connect(LocalPeer *local_peer,
     pthread_mutex_init(&remote_peer->encryption_mutex, NULL);
     remote_peer->local_peer = local_peer;
     remote_peer->free_on_disconnect = 0;
+    remote_peer->attribute = NULL;
     remote_peer->encrypted_conversation = pk != NULL;
     if (pk != NULL)
         memcpy(remote_peer->pk, pk, ED25519_PK_LENGTH);
@@ -267,6 +268,7 @@ int z_accept(LocalPeer *local_peer, RemotePeer *remote_peer) {
     remote_peer->disconnection_listener = NULL;
     remote_peer->reply_listeners = NULL;
     remote_peer->reply_listeners_len = 0;
+    remote_peer->attribute = NULL;
     pthread_mutex_init(&remote_peer->reply_listeners_mutex, NULL);
     pthread_mutex_init(&remote_peer->encryption_mutex, NULL);
 

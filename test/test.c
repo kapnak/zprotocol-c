@@ -8,6 +8,8 @@ void on_connection_server(RemotePeer *peer) {
     char peer_pk_bs64[PK_BS64_LENGTH];
     z_helpers_pk_bin_to_bs64(peer->pk, peer_pk_bs64);
     printf("[+] Peer '%s' connected.\n", peer_pk_bs64);
+    peer->attribute = (int *)malloc(sizeof(int));
+    *(int *)peer->attribute = 1;
 }
 
 
@@ -26,6 +28,12 @@ void on_disconnect_server(RemotePeer *peer) {
     char peer_pk_bs64[PK_BS64_LENGTH];
     z_helpers_pk_bin_to_bs64(peer->pk, peer_pk_bs64);
     printf("[-] Peer '%s' disconnected.\n", peer_pk_bs64);
+
+    if (*(int *)peer->attribute != 1)
+        fprintf(stderr, "Failed to retrieve custom attribute.\n");
+    else
+        free(peer->attribute);
+
     count++;
     if (count == 2)
         z_stop(peer->local_peer);
