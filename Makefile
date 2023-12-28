@@ -1,7 +1,7 @@
 build:
 build-shared:
 	mkdir -p build
-	gcc -c -fpic src/zprotocol.c -o build/zprotocol.o
+	gcc -c -fpic src/zprotocol.c src/helpers.c -o build/zprotocol.o
 	gcc -shared -o build/libzprotocol.so build/zprotocol.o -lsodium
 	rm -f build/zprotocol.o
 
@@ -11,7 +11,7 @@ build-shared:
 
 build-static:
 	mkdir -p build
-	gcc -c src/zprotocol.c -o build/zprotocol.o
+	gcc -c src/zprotocol.c src/helpers.c -o build/zprotocol.o
 	ar rs build/libzprotocol.a build/zprotocol.o
 	rm -f build/zprotocol.o
 
