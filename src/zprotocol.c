@@ -6,6 +6,7 @@
 #include <pthread.h>
 #include <netinet/in.h>
 #include <arpa/inet.h>
+#include <poll.h>
 
 
 
@@ -35,7 +36,9 @@ void * handle_server_listener(void *args) {
     int r;
     do {
         RemotePeer *remote_peer = malloc(sizeof(RemotePeer));
+        printf("Accepting ...\n");
         r = z_accept(local_peer, remote_peer);
+        printf("Accepted\n");
         remote_peer->free_on_disconnect = 1;
         if (r == 0) {
             local_peer->threads++;
@@ -272,22 +275,17 @@ int z_accept(LocalPeer *local_peer, RemotePeer *remote_peer) {
     pthread_mutex_init(&remote_peer->reply_listeners_mutex, NULL);
     pthread_mutex_init(&remote_peer->encryption_mutex, NULL);
 
-    struct timeval timeout;
-    timeout.tv_sec = 1;
-    timeout.tv_usec = 0;
-
-    // We use select to wait for connection with timeout.
+    // We use poll to wait for connection with timeout.
     int r;
     do {
-        fd_set readfds;
-        FD_ZERO(&readfds);
-        FD_SET(local_peer->fd, &readfds);
-        r = select(local_peer->fd + 1, &readfds, NULL, NULL, &timeout);
+        struct pollfd fds[1];
+        fds[0].fd = local_peer->fd;
+        fds[0].events = POLLIN;
+        r = poll(fds, 1, 3000);
     } while (r == 0);
 
     if (r < 0)
         return -1;
-
 
     if ((remote_peer->fd = accept(local_peer->fd, (struct sockaddr *)&client, &client_len)) == -1)
         return -1;
@@ -344,17 +342,13 @@ int z_accept(LocalPeer *local_peer, RemotePeer *remote_peer) {
 int z_receive(RemotePeer *remote_peer, Message *message) {
     int payload_length;
 
-    struct timeval timeout;
-    timeout.tv_sec = 1;
-    timeout.tv_usec = 0;
-
-    // We use select to wait for activity with timeout.
+    // We use poll to wait for data with timeout.
     int r;
     do {
-        fd_set readfds;
-        FD_ZERO(&readfds);
-        FD_SET(remote_peer->fd, &readfds);
-        r = select(remote_peer->fd + 1, &readfds, NULL, NULL, &timeout);
+        struct pollfd fds[1];
+        fds[0].fd = remote_peer->fd;
+        fds[0].events = POLLIN;
+        r = poll(fds, 1, 3000);
     } while (r == 0);
 
     if (r < 0)
