@@ -8,6 +8,7 @@
 
 #define PK_BS64_LENGTH sodium_base64_ENCODED_LEN(crypto_sign_PUBLICKEYBYTES, sodium_base64_VARIANT_URLSAFE_NO_PADDING)
 #define SK_BS64_LENGTH sodium_base64_ENCODED_LEN(crypto_sign_SECRETKEYBYTES, sodium_base64_VARIANT_URLSAFE_NO_PADDING)
+#define PK_BS32_LENGTH 52
 #define ED25519_PK_LENGTH 32
 #define ED25519_SK_LENGTH 64
 #define X25519_LENGTH crypto_scalarmult_curve25519_BYTES
@@ -18,9 +19,9 @@
 #define PAYLOAD_ADDED_LENGTH crypto_secretstream_xchacha20poly1305_ABYTES
 
 // For cygwin
-//#ifndef MSG_MORE
-//#define MSG_MORE 0x8000
-//#endif
+#ifndef MSG_MORE
+#define MSG_MORE 0x4000
+#endif
 
 #define MESSAGE_GET_LENGTH(message)         ((message) + MESSAGE_ID_LENGTH)
 #define MESSAGE_GET_PAYLOAD(message)        ((message) + MESSAGE_ID_LENGTH + MESSAGE_LENGTH_LENGTH)
@@ -284,5 +285,18 @@ void z_helpers_pk_bs64_to_bin(const char pk_bs64[PK_BS64_LENGTH], unsigned char 
 
 
 void z_helpers_sk_bs64_to_bin(const char sk_bs64[SK_BS64_LENGTH], unsigned char sk[ED25519_SK_LENGTH]);
+
+
+/**
+ * @author Markus Gutschke for google-authenticator-libpam github repo.
+ */
+int z_helpers_bin_to_bs32(const unsigned char *bin, int bin_length, char *bs32, int bs32_length);
+
+
+/**
+ * @author Markus Gutschke for google-authenticator-libpam github repo.
+ */
+int z_helpers_bs32_to_bin(const char *bs32, unsigned char *bin, int bin_length);
+
 
 #endif
