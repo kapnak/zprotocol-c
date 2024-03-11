@@ -19,7 +19,7 @@
 #define PAYLOAD_ADDED_LENGTH crypto_secretstream_xchacha20poly1305_ABYTES
 
 // For cygwin
-#ifndef MSG_MORE
+#if __CYGWIN__
 #define MSG_MORE 0x4000
 #endif
 
