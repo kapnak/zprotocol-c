@@ -13,7 +13,7 @@ build-shared:
 build-static:
 	mkdir -p build
 	gcc -c src/zprotocol.c -o build/zprotocol.o
-	gcc -c src/helpers.c -o build/zprotocol.o
+	gcc -c src/helpers.c -o build/helpers.o
 	ar rs build/libzprotocol.a build/*.o
 	rm -f build/*.o
 
@@ -22,15 +22,20 @@ build-static:
 	cp src/zprotocol.h build/include
 
 install:
-	sudo cp build/libzprotocol.so /usr/lib/
-	sudo cp build/include/zprotocol.h /usr/include
+	cp build/libzprotocol.so /usr/lib/
+	cp build/include/zprotocol.h /usr/include
+
+install-static:
+	cp build/libzprotocol.a /usr/lib/
+	cp build/include/zprotocol.h /usr/include
 
 remove:
-	sudo rm -f /usr/lib/libzprotocol.so
-	sudo rm -f /usr/include/zprotocol.h
+	rm -f /usr/lib/libzprotocol.so
+	rm -f /usr/lib/libzprotocol.a
+	rm -f /usr/include/zprotocol.h
 
 clean:
-	sudo rm -rf build
+	rm -rf build
 
 backup:
 	mkdir -p ../zprotocol_backup && \
