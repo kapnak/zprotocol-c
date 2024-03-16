@@ -8,7 +8,7 @@
 
 #define PK_BS64_LENGTH sodium_base64_ENCODED_LEN(crypto_sign_PUBLICKEYBYTES, sodium_base64_VARIANT_URLSAFE_NO_PADDING)
 #define SK_BS64_LENGTH sodium_base64_ENCODED_LEN(crypto_sign_SECRETKEYBYTES, sodium_base64_VARIANT_URLSAFE_NO_PADDING)
-#define PK_BS32_LENGTH 52
+#define PK_BS32_LENGTH 53
 #define ED25519_PK_LENGTH 32
 #define ED25519_SK_LENGTH 64
 #define X25519_LENGTH crypto_scalarmult_curve25519_BYTES
