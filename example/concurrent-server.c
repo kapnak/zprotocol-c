@@ -32,9 +32,9 @@ void on_disconnect(RemotePeer *client) {
 int main() {
     unsigned char pk[ED25519_PK_LENGTH];
     unsigned char sk[ED25519_SK_LENGTH];
-    z_helpers_pk_bs64_to_bin("5Ti_m_HxFu0CWUaIJKcoGORLtJxE3PajGM86pj4QhWw", pk);
-    z_helpers_sk_bs64_to_bin("4axNsumJG5NOvfXVTS88L3_vW8CGlc6EvjfYriv8RJXlOL-b8fEW7QJZRogkpygY5Eu0nETc9qMYzzqmPhCFbA", sk);
-
+    //z_helpers_pk_bs64_to_bin("5Ti_m_HxFu0CWUaIJKcoGORLtJxE3PajGM86pj4QhWw", pk);
+    //z_helpers_sk_bs64_to_bin("4axNsumJG5NOvfXVTS88L3_vW8CGlc6EvjfYriv8RJXlOL-b8fEW7QJZRogkpygY5Eu0nETc9qMYzzqmPhCFbA", sk);
+    z_helpers_read_kp("server.sk", pk, sk);
     LocalPeer server;
     z_initialize_local_peer(&server, pk, sk, on_message, on_connection, on_disconnect);
     z_listen(&server, "0.0.0.0", 6339);
