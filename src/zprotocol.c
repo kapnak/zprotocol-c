@@ -62,9 +62,7 @@ void * handle_server_listener(void *args) {
     int r;
     do {
         RemotePeer *remote_peer = malloc(sizeof(RemotePeer));
-        printf("Accepting ...\n");
         r = z_accept(local_peer, remote_peer);
-        printf("Accepted\n");
         remote_peer->free_on_disconnect = 1;
         if (r == 0) {
             local_peer->threads++;
