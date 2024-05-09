@@ -84,7 +84,7 @@ void * handle_server_listener(void *args) {
 
 void * handle_listeners(void *args) {
     RemotePeer *remote_peer = (RemotePeer *)args;
-    atomic_int threads = 0;
+    _Atomic int threads = 0;
 
     // Calling the connection listener
     if (remote_peer->local_peer->connection_listener != NULL) {

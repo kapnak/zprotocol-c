@@ -52,7 +52,6 @@ void wait_all() {
 }
 
 int main() {
-    atomic_int = 0;
     // Server public key
     unsigned char server_pk[ED25519_PK_LENGTH];
     z_helpers_pk_bs64_to_bin("5Ti_m_HxFu0CWUaIJKcoGORLtJxE3PajGM86pj4QhWw", server_pk);

@@ -4,7 +4,6 @@
 #include <stdio.h>
 #include <stdint.h>
 #include <sodium.h>
-#include <stdatomic.h>
 
 #define PK_BS64_LENGTH sodium_base64_ENCODED_LEN(crypto_sign_PUBLICKEYBYTES, sodium_base64_VARIANT_URLSAFE_NO_PADDING)
 #define SK_BS64_LENGTH sodium_base64_ENCODED_LEN(crypto_sign_SECRETKEYBYTES, sodium_base64_VARIANT_URLSAFE_NO_PADDING)
@@ -65,7 +64,7 @@ typedef struct CallListenerArgs {
     RemotePeer *remote_peer;
     MessageListener message_listener;
     Message *message;
-    atomic_int *threads;
+    _Atomic int *threads;
 } CallListenerArgs;
 
 
@@ -78,7 +77,7 @@ typedef struct LocalPeer {
     ConnectionListener connection_listener;
     DisconnectionListener disconnection_listener;
     int fd;
-    atomic_int threads;
+    _Atomic int threads;
 } LocalPeer;
 
 
