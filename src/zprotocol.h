@@ -21,6 +21,9 @@
 // For cygwin
 #if __CYGWIN__
 #define MSG_MORE 0x4000
+#define RECV_ALL(fd, buf, len, flag) recv_waitall(fd, buf, len, flag)
+#else
+#define RECV_ALL(fd, buf, len, flag) recv(fd, buf, len, flag | MSG_WAITALL)
 #endif
 
 #define MESSAGE_GET_LENGTH(message)         ((message) + MESSAGE_ID_LENGTH)
