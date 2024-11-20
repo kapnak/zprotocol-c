@@ -8,7 +8,7 @@ build-shared:
 	rm -f build/*.o
 
 	mkdir -p build/include build/lib
-	cp build/libzprotocol.so build/lib
+	cp build/libzprotocol.so build/lib/
 	cp src/zprotocol.h build/include/
 
 build-static:
@@ -19,9 +19,9 @@ build-static:
 	ar rs build/libzprotocol.a build/*.o
 	rm -f build/*.o
 
-	mkdir -p include lib
-	cp build/libzprotocol.a build/lib
-	cp src/zprotocol.h build/include
+	mkdir -p build/include build/lib
+	cp build/libzprotocol.a build/lib/
+	cp src/zprotocol.h build/include/
 
 install:
 	cp build/libzprotocol.so /usr/lib/
