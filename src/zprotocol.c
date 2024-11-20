@@ -175,15 +175,17 @@ int z_listen(LocalPeer *local_peer, const char *address, unsigned short port) {
     server.sin_addr.s_addr = inet_addr(address);
 
     if (setsockopt(local_peer->fd, SOL_SOCKET, SO_REUSEADDR, &(int){1}, sizeof(int)) < 0)
-        return -1;
+        return errno;
 
     if (bind(local_peer->fd, (struct sockaddr *)&server, sizeof(server)) < 0)
-        return -1;
+        return errno;
 
     if (listen(local_peer->fd, 1) != 0)
-        return -1;
+        return errno;
 
-    handle_server_listener(local_peer);
+    if (local_peer->connection_listener != NULL)
+        handle_server_listener(local_peer);
+
     return 0;
 }
 
