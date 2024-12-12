@@ -2,26 +2,26 @@ import subprocess
 
 
 def execute(label, command, validator, ignore_warning=False, ignore_err=False):
-    print(f'[RUNNING] {label} ... ', end='')
+    print(f'[RUNNING] {label} ... ', end='', flush=True)
     result = subprocess.run(command,
                             text=True,
                             shell=True,
                             executable='/bin/bash',
-                            capture_output=True, )
+                            capture_output=True)
     # encoding='cp437')
 
     if result.returncode != 0 or ((result.stderr != '' and not ignore_err) and not ignore_warning):
-        print(f'\r[FAILED] {label}')
+        print(f'\r[FAILED] {label}     ')
         print(f'Command \'{command}\' return code {result.returncode} '
               f'with {"not " if result.stderr != "" else ""}empty stderr.')
         print(result.stderr)
         exit(1)
     elif not validator(result.stdout):
-        print(f'\r[FAILED] {label}')
+        print(f'\r[FAILED] {label}     ')
         print(f'Command \'{command}\' failed validation with output :\n{result.stdout}')
         exit(1)
     else:
-        print(f'\r[SUCCESS] {label}')
+        print(f'\r[SUCCESS] {label}     ')
 
 
 # Building tests

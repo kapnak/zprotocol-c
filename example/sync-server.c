@@ -10,7 +10,8 @@ int main() {
 
     LocalPeer server;
     z_initialize_local_peer(&server, pk, sk, NULL, NULL, NULL);
-    z_listen(&server, "0.0.0.0", 6339);
+    if (z_listen(&server, "0.0.0.0", 6339))
+        perror("Failed to listen:");
 
     RemotePeer client;
     while (z_accept(&server, &client) == 0) {
@@ -18,7 +19,7 @@ int main() {
 
         char client_pk_bs64[PK_BS64_LENGTH];
         z_helpers_pk_bin_to_bs64(client.pk, client_pk_bs64);
-        printf("[+] Client '%s' connected.\n", client_pk_bs64);
+        printf("[+] Server '%s' connected.\n", client_pk_bs64);
 
         Message request;
         if (z_receive(&client, &request))
@@ -30,7 +31,7 @@ int main() {
             continue;
 
         z_disconnect(&client);
-        printf("[-] Client '%s' disconnected.\n", client_pk_bs64);
+        printf("[-] Server '%s' disconnected.\n", client_pk_bs64);
     }
 
     printf("Server stopped.\n");

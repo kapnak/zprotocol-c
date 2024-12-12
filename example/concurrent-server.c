@@ -6,7 +6,7 @@
 void on_connection(RemotePeer *client) {
     char client_pk_bs64[PK_BS64_LENGTH];
     z_helpers_pk_bin_to_bs64(client->pk, client_pk_bs64);
-    printf("[+] Client '%s' connected.\n", client_pk_bs64);
+    printf("[+] Server '%s' connected.\n", client_pk_bs64);
 }
 
 
@@ -24,7 +24,7 @@ void on_message(RemotePeer *client, Message *message) {
 void on_disconnect(RemotePeer *client) {
     char client_pk_bs64[PK_BS64_LENGTH];
     z_helpers_pk_bin_to_bs64(client->pk, client_pk_bs64);
-    printf("[-] Client '%s' disconnected.\n", client_pk_bs64);
+    printf("[-] Server '%s' disconnected.\n", client_pk_bs64);
     z_stop(client->local_peer);
 }
 
